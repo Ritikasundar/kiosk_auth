@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIOSK MENU</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        .top-bar {
+            background-color: #FFF0F5; /* Light purple background */
+            color: #191F44; /* Dark blue text color */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between; /* Align items to the left and right edges */
+            align-items: center; /* Center items vertically */
+            text-align: center; /* Center text horizontally */
+        }
+        .btn-custom {
+            background-color: #FFFFFF; /* White */
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .btn-custom:hover {
+            background-color: #45a049;
+        }
+        .kiosk-heading {
+            margin-left: 20px; /* Adjust left margin as needed */
+        }
+        .container {
+            margin-top: 20px; /* Add space between top bar and container */
+            border: 1px solid #ced4da; /* Add border with color */
+            border-radius: 7px; /* Add border radius */
+            padding: 30px; /* Add padding to create space between content and border */
+            background-color: #D3D3D3; /* Light grey background */
+        }
+        .card {
+            border-radius: 15px; /* Add border radius */
+            overflow: hidden;
+            background-color: #f8f9fa; /* Card background color */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+            width: 330px; /* Change width */
+            height: 400px; /* Change height */
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-title {
+            font-weight: bold;
+            color: #191F44; /* Dark blue text color */
+        }
+        .card-text {
+            color: #6c757d; /* Grey text color */
+        }
+        .col {
+            margin-bottom: 20px; /* Adjust the bottom margin between each card */
+        }
+        .profile-photo {
+            border-radius: 50%;
+            width: 40px; /* Adjusted size */
+            height: 40px; /* Adjusted size */
+            object-fit: cover;
+            margin-right: 5px; /* Space between image and text */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <h2 class="kiosk-heading">MUG & BEAN</h2>
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile" id="profile-link">Profile</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="menu-items">
+            <!-- Food items will be displayed here -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.dropbox.com/scl/fi/ci6b9dili4lh3xrnr9qlt/chapati.png?rlkey=r1xxrhv6g448fzjhjjsd6ruh1&st=131dy6vn&dl=1" class="card-img-top" alt="Food Image" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">chapati</h5>
+                        <p class="card-text">Description for food 1.</p>
+                        <p class="card-text">Cost: $10.00</p>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.dropbox.com/scl/fi/zz42y6pyiaw7yyz9zwht4/dosai.png?rlkey=yu8pqlkh1rm6402ol15mbnf9l&st=l38yael8&dl=1" class="card-img-top" alt="Food Image" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">dosai</h5>
+                        <p class="card-text">Description for food 2.</p>
+                        <p class="card-text">Cost: $12.00</p>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.dropbox.com/scl/fi/csc1gj28lyszjvbqrymh5/idly.png?rlkey=gqawcihg1ootsqpix72p8pcax&st=od20yas3&dl=1" class="card-img-top" alt="Food Image" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">idly</h5>
+                        <p class="card-text">Description for food 3.</p>
+                        <p class="card-text">Cost: $15.00</p>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchProfile() {
+            try {
+                const response = await fetch('/profile');
+                if (response.ok) {
+                    const user = await response.json();
+                    document.getElementById('profile-link').innerHTML = `
+                        <img src="${user._json.picture}" alt="Profile Photo" class="profile-photo">
+                        ${user.displayName || 'Profile'}
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        }
+
+        // Fetch profile when the page loads
+        fetchProfile();
+    </script>
+</body>
+</html>
